@@ -1,12 +1,17 @@
+import { useContext } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../auth';
 
 
 export const Navbar = () => {
+    
+    const { user, logout } = useContext(AuthContext)
 
     const navigate = useNavigate();
 
     const onLogout = () => {
-        navigate('/login',{
+        logout();
+        navigate('./login',{
             replace:true
         });
     }
@@ -16,7 +21,7 @@ export const Navbar = () => {
             
             <Link 
                 className="navbar-brand" 
-                to="/"
+                to="./"
             >
                 Asociaciones
             </Link>
@@ -26,21 +31,21 @@ export const Navbar = () => {
 
                     <NavLink 
                         className={ ({isActive}) => `nav-item nav-link ${isActive? ' active':''}`} 
-                        to="/marvel"
+                        to="./marvel"
                     >
                         Marvel
                     </NavLink>
 
                    <NavLink 
                         className={ ({isActive}) => `nav-item nav-link${ isActive? ' active':''}`} 
-                        to="/dc"
+                        to="./dc"
                     >
                         DC
                     </NavLink>
                     
                      <NavLink 
                         className={ ({isActive}) => `nav-item nav-link${ isActive? ' active':''}`} 
-                        to="/search"
+                        to="./search"
                     >
                         Search
                     </NavLink>
@@ -51,7 +56,7 @@ export const Navbar = () => {
             <div className="navbar-collapse collapse w-100 order-3 dual-collapse2 d-flex justify-content-end">
                 <ul className="navbar-nav ml-auto">
                     <span className='nav-item nav-link text-primary'>
-						Bernardo
+						{ user?.username }
 					</span>
 					<button className='nav-item nav-link btn'
                         onClick={onLogout}
